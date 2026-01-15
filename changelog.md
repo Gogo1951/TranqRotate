@@ -1,5 +1,10 @@
 ## TranqRotate Changelog
 
+#### v2.3.2
+
+- Update toc for TBC 2.5.5
+- Compatibility fix with GetAddOnMetadata API changes
+
 #### v2.3.1
 
 - Update toc for 1.15.8
