@@ -2,6 +2,8 @@ TranqRotate = select(2, ...)
 
 local L = TranqRotate.L
 
+-- GetAddOnMetadata moves to C_ namespace in TBC 2.5.5 - Era still use the old global function
+local GetAddOnMetadata = GetAddOnMetadata or (C_AddOns and C_AddOns.GetAddOnMetadata)
 TranqRotate.version = GetAddOnMetadata(..., "Version")
 
 -- Initialize addon - Shouldn't be call more than once
