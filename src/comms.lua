@@ -102,7 +102,7 @@ function TranqRotate:sendSyncOrder(whisper, name)
     if (whisper) then
         TranqRotate:sendWhisperAddonMessage(message, name)
     else
-        TranqRotate:sendRaidAddonMessage(message, name)
+        TranqRotate:sendRaidAddonMessage(message)
     end
 end
 
