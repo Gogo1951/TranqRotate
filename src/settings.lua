@@ -113,7 +113,7 @@ function TranqRotate:CreateConfig()
                         name = L["ENABLE_ARCANE_SHOT_TESTING"],
                         type = "execute",
                         order = 33,
-                        func = function() TranqRotate.toggleArcaneShotTesting() end
+                        func = function() TranqRotate:toggleArcaneShotTesting() end
                     },
                     featuresHeader = {
                         name = L["FEATURES_HEADER"],

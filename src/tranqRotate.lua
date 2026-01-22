@@ -51,7 +51,7 @@ function TranqRotate:applySettings()
     TranqRotate.mainFrame:ClearAllPoints()
 
     local config = TranqRotate.db.profile
-    if config.point then
+    if config and config.point then
         TranqRotate.mainFrame:SetPoint(config.point, UIParent, 'BOTTOMLEFT', config.x, config.y)
     else
         TranqRotate.mainFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
@@ -106,7 +106,14 @@ function TranqRotate:sendMessage(message, channelType, targetChannel)
     if channelType == "CHANNEL" then
         channelNumber = GetChannelName(targetChannel)
     end
-    SendChatMessage(message, channelType, nil, channelNumber or targetChannel)
+
+    TranqRotate:SendChatMessage(message, channelType, nil, channelNumber or targetChannel)
+end
+
+-- Game API Wrapper to ease maintenance
+function TranqRotate:SendChatMessage(message, channelType, language, targetChannel)
+    local SendChatMessage = SendChatMessage or (C_ChatInfo and C_ChatInfo.SendChatMessage)
+    SendChatMessage(message, channelType, language, targetChannel)
 end
 
 SLASH_TRANQROTATE1 = "/tranq"
