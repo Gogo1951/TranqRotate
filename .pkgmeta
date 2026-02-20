@@ -16,3 +16,4 @@ externals:
 ignore:
   - README.md
   - docs
+  - tranq_icon.png
