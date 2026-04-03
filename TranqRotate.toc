@@ -20,11 +20,16 @@ libs\AceComm-3.0\AceComm-3.0.xml
 libs\AceSerializer-3.0\AceSerializer-3.0.xml
 #@end-no-lib-strip@
 
-locales\enUS.lua
-locales\frFR.lua
-locales\zhCN.lua
-locales\zhTW.lua
-locales\ruRU.lua
+locales/enUS.lua
+locales/deDE.lua
+locales/esES.lua
+locales/frFR.lua
+locales/itIT.lua
+locales/koKR.lua
+locales/ptBR.lua
+locales/ruRU.lua
+locales/zhCN.lua
+locales/zhTW.lua 
 
 src\tranqRotate.lua
 src\events.lua
