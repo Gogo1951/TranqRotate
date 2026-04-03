@@ -62,13 +62,13 @@ function TranqRotate:applySettings()
 end
 
 -- Print wrapper, just in case
-function TranqRotate:printMessage(msg)
-    print(msg)
+function TranqRotate:printMessage(message)
+    print(message)
 end
 
 -- Print message with colored prefix
-function TranqRotate:printPrefixedMessage(msg)
-    TranqRotate:printMessage(TranqRotate:colorText(TranqRotate.constants.printPrefix) .. msg)
+function TranqRotate:printPrefixedMessage(message)
+    TranqRotate:printMessage(TranqRotate:colorText(TranqRotate.constants.printPrefix) .. message)
 end
 
 -- Send a tranq announce message to a given channel
@@ -111,26 +111,26 @@ end
 
 SLASH_TRANQROTATE1 = "/tranq"
 SLASH_TRANQROTATE2 = "/tranqrotate"
-SlashCmdList["TRANQROTATE"] = function(msg)
-    local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
+SlashCmdList["TRANQROTATE"] = function(message)
+    local _, _, command, arguments = string.find(message, "%s?(%w+)%s?(.*)")
 
-    if (cmd == 'toggle') then
+    if (command == 'toggle') then
         TranqRotate:toggleDisplay()
-    elseif (cmd == 'lock') then
+    elseif (command == 'lock') then
         TranqRotate:lock(true)
-    elseif (cmd == 'unlock') then
+    elseif (command == 'unlock') then
         TranqRotate:lock(false)
-    elseif (cmd == 'backup') then
+    elseif (command == 'backup') then
         TranqRotate:alertBackup(TranqRotate.db.profile.unableToTranqMessage)
-    elseif (cmd == 'rotate') then -- @todo decide if this should be removed or not (Used in runDemo)
+    elseif (command == 'rotate') then -- @todo decide if this should be removed or not (Used in runDemo)
         TranqRotate:testRotation()
-    elseif (cmd == 'test') then
+    elseif (command == 'test') then
         TranqRotate:toggleArcaneShotTesting()
-    elseif (cmd == 'report') then
+    elseif (command == 'report') then
         TranqRotate:printRotationSetup()
-    elseif (cmd == 'settings') then
+    elseif (command == 'settings') then
         TranqRotate:openSettings()
-    elseif (cmd == 'check') then
+    elseif (command == 'check') then
         TranqRotate:checkVersions()
     else
         TranqRotate:printHelp()
@@ -177,8 +177,8 @@ end
 -- Print the main rotation on multiple lines
 function TranqRotate:printMultilineRotation(rotationTable, channel)
     local position = 1;
-    for key, hunt in pairs(rotationTable) do
-        TranqRotate:sendRotationSetupBroadcastMessage(tostring(position) .. ' - ' .. hunt.name)
+    for key, hunter in pairs(rotationTable) do
+        TranqRotate:sendRotationSetupBroadcastMessage(tostring(position) .. ' - ' .. hunter.name)
         position = position + 1;
     end
 end
@@ -187,8 +187,8 @@ end
 function TranqRotate:buildGroupMessage(prefix, rotationTable)
     local hunters = {}
 
-    for key, hunt in pairs(rotationTable) do
-        table.insert(hunters, TranqRotate:formatPlayerName(hunt.name))
+    for key, hunter in pairs(rotationTable) do
+        table.insert(hunters, TranqRotate:formatPlayerName(hunter.name))
     end
 
     return prefix .. table.concat(hunters, ', ')
@@ -361,3 +361,4 @@ function TranqRotate:notifyUserAboutAvailableUpdate(isBreakingUpdate)
         end
     end
 end
+}
