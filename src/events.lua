@@ -1,3 +1,5 @@
+local L = TranqRotate.L
+
 TranqRotate.eventFrame = CreateFrame("Frame")
 TranqRotate.eventFrame:RegisterEvent("PLAYER_LOGIN")
 TranqRotate.eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -12,6 +14,7 @@ TranqRotate.eventFrame:SetScript(
             TranqRotate:init()
             self:UnregisterEvent("PLAYER_LOGIN")
 
+            -- Delayed raid update because raid data is unreliable at PLAYER_LOGIN
             C_Timer.After(5, function()
                 TranqRotate:updateRaidStatus()
             end)
@@ -24,12 +27,17 @@ TranqRotate.eventFrame:SetScript(
 )
 
 function TranqRotate:COMBAT_LOG_EVENT_UNFILTERED()
+
+    -- @todo : Improve this with register / unregister event to save resources
+    -- Avoid parsing combat log when not able to use it
     if (not TranqRotate.raidInitialized) then return end
+    -- Avoid parsing combat log when outside instance if test mode isn't enabled
     if (not TranqRotate.testMode and not IsInInstance()) then return end
 
     local timestamp, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destinationGUID, destinationName, destinationFlags, destinationRaidFlags = CombatLogGetCurrentEventInfo()
     local spellIdentifier, spellName, spellSchool, amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing, isOffHand = select(12, CombatLogGetCurrentEventInfo())
 
+    -- Using GetSpellInfo on arcaneShotSpellId and spellIdentifier to account for all ranks of arcane shot
     if (spellIdentifier == TranqRotate.constants.tranqShotSpellId or (TranqRotate.testMode and GetSpellInfo(spellIdentifier) == GetSpellInfo(TranqRotate.constants.arcaneShotSpellId))) then
         local hunter = TranqRotate:getHunter(sourceGUID)
         if (hunter) then
@@ -94,14 +102,17 @@ function TranqRotate:COMBAT_LOG_EVENT_UNFILTERED()
     end
 end
 
+-- Raid group has changed
 function TranqRotate:GROUP_ROSTER_UPDATE()
     TranqRotate:updateRaidStatus()
 end
 
+-- Player left combat
 function TranqRotate:PLAYER_REGEN_ENABLED()
     TranqRotate:updateRaidStatus()
 end
 
+-- Player left combat
 function TranqRotate:ENCOUNTER_END()
     TranqRotate.endEncounter()
 end
@@ -114,7 +125,9 @@ function TranqRotate:PLAYER_TARGET_CHANGED()
     end
 end
 
+-- Register single unit events for a given hunter
 function TranqRotate:registerUnitEvents(hunter)
+
     hunter.frame:RegisterUnitEvent("PARTY_MEMBER_DISABLE", hunter.name)
     hunter.frame:RegisterUnitEvent("PARTY_MEMBER_ENABLE", hunter.name)
     hunter.frame:RegisterUnitEvent("UNIT_HEALTH", hunter.name)
@@ -127,8 +140,10 @@ function TranqRotate:registerUnitEvents(hunter)
             TranqRotate:updateHunterStatus(hunter)
         end
     )
+
 end
 
+-- Unregister single unit events for a given hunter
 function TranqRotate:unregisterUnitEvents(hunter)
     hunter.frame:UnregisterEvent("PARTY_MEMBER_DISABLE")
     hunter.frame:UnregisterEvent("PARTY_MEMBER_ENABLE")
@@ -137,6 +152,7 @@ function TranqRotate:unregisterUnitEvents(hunter)
     hunter.frame:UnregisterEvent("UNIT_FLAGS")
 end
 
+-- Handle timed alert for non tranqed frenzy
 function TranqRotate:handleTimedAlert()
     if (TranqRotate.db.profile.enableTimedBackupAlert) then
         C_Timer.After(TranqRotate.db.profile.timedBackupAlertDelay, function()
