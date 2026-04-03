@@ -2,7 +2,7 @@ local L = TranqRotate.L
 
 -- Create main window
 function TranqRotate:createMainFrame()
-    TranqRotate.mainFrame = CreateFrame("Frame", 'mainFrame', UIParent)
+    TranqRotate.mainFrame = CreateFrame("Frame", 'TranqRotateMainFrame', UIParent)
     TranqRotate.mainFrame:SetWidth(TranqRotate.constants.mainFrameWidth)
     TranqRotate.mainFrame:SetHeight(TranqRotate.constants.rotationFramesBaseHeight * 2 + TranqRotate.constants.titleBarHeight)
     TranqRotate.mainFrame:Show()
@@ -34,7 +34,7 @@ end
 
 -- Create Title frame
 function TranqRotate:createTitleFrame()
-    TranqRotate.mainFrame.titleFrame = CreateFrame("Frame", 'rotationFrame', TranqRotate.mainFrame)
+    TranqRotate.mainFrame.titleFrame = CreateFrame("Frame", 'TranqRotateTitleFrame', TranqRotate.mainFrame)
     TranqRotate.mainFrame.titleFrame:SetPoint('TOPLEFT')
     TranqRotate.mainFrame.titleFrame:SetPoint('TOPRIGHT')
     TranqRotate.mainFrame.titleFrame:SetHeight(TranqRotate.constants.titleBarHeight)
@@ -126,7 +126,7 @@ end
 
 -- Create rotation frame
 function TranqRotate:createRotationFrame()
-    TranqRotate.mainFrame.rotationFrame = CreateFrame("Frame", 'rotationFrame', TranqRotate.mainFrame)
+    TranqRotate.mainFrame.rotationFrame = CreateFrame("Frame", 'TranqRotateRotationFrame', TranqRotate.mainFrame)
     TranqRotate.mainFrame.rotationFrame:SetPoint('LEFT')
     TranqRotate.mainFrame.rotationFrame:SetPoint('RIGHT')
     TranqRotate.mainFrame.rotationFrame:SetPoint('TOP', 0, -TranqRotate.constants.titleBarHeight)
@@ -140,7 +140,7 @@ end
 -- Create backup frame
 function TranqRotate:createBackupFrame()
     -- Backup frame
-    TranqRotate.mainFrame.backupFrame = CreateFrame("Frame", 'backupFrame', TranqRotate.mainFrame)
+    TranqRotate.mainFrame.backupFrame = CreateFrame("Frame", 'TranqRotateBackupFrame', TranqRotate.mainFrame)
     TranqRotate.mainFrame.backupFrame:SetPoint('TOPLEFT', TranqRotate.mainFrame.rotationFrame, 'BOTTOMLEFT', 0, 0)
     TranqRotate.mainFrame.backupFrame:SetPoint('TOPRIGHT', TranqRotate.mainFrame.rotationFrame, 'BOTTOMRIGHT', 0, 0)
     TranqRotate.mainFrame.backupFrame:SetHeight(TranqRotate.constants.rotationFramesBaseHeight)
