@@ -5,13 +5,13 @@ TranqRotate = select(2, ...)
 local L = {
 
     ["LOADED_MESSAGE"] = "TranqRotate 已加载, 输入 /tranq 进入设置",
-    ["TRANQ_WINDOW_HIDDEN"] = "Tranqrotate 窗口隐藏. 输入 /tranq toggle 显示窗口",
+    ["TRANQ_WINDOW_HIDDEN"] = "TranqRotate 窗口已隐藏。输入 /tranq toggle 显示窗口",
 
     -- Buttons tooltips
-    ["BUTTON_CLOSE"] = "Hide window",
-    ["BUTTON_SETTINGS"] = "Settings",
-    ["BUTTON_RESET_ROTATION"] = "Reset Rotation",
-    ["BUTTON_PRINT_ROTATION"] = "Print Rotation",
+    ["BUTTON_CLOSE"] = "隐藏窗口",
+    ["BUTTON_SETTINGS"] = "设置",
+    ["BUTTON_RESET_ROTATION"] = "重置循环",
+    ["BUTTON_PRINT_ROTATION"] = "发送循环",
 
     -- Settings
     ["SETTING_GENERAL"] = "一般",
@@ -20,8 +20,8 @@ local L = {
 
     ["LOCK_WINDOW"] = "锁定窗口",
     ["LOCK_WINDOW_DESC"] = "锁定窗口",
-    ["RESET_WINDOW_POSITION"] = "Reset position",
-    ["RESET_WINDOW_POSITION_DESC"] = "Reset the main window position",
+    ["RESET_WINDOW_POSITION"] = "重置位置",
+    ["RESET_WINDOW_POSITION_DESC"] = "重置主窗口位置",
     ["HIDE_WINDOW_NOT_IN_RAID"] = "不在团队时隐藏窗口",
     ["HIDE_WINDOW_NOT_IN_RAID_DESC"] = "不在团队时隐藏窗口",
     ["DO_NOT_SHOW_WHEN_JOINING_RAID"] = "加入团队时隐藏窗口",
@@ -32,11 +32,11 @@ local L = {
     ["WINDOW_UNLOCKED"] = "TranqRotate: 窗口已锁定",
 
     --- Player names formatting options
-    ["PLAYER_NAME_FORMAT"] = "Player names format",
-    ["PLAYER_NAME_FORMAT_DESC"] = "On connected realms, players from other servers will have a the server suffix hidden by default. If you ever get two hunter with the exact same name, adjust this setting to your needs",
-    ["PLAYER_NAME_ONLY_OPTION_LABEL"] = "Playername",
-    ["SHORTENED_SUFFIX_OPTION_LABEL"] = "Playername-Ser",
-    ["FULL_NAME_OPTION_LABEL"] = "Playername-Server",
+    ["PLAYER_NAME_FORMAT"] = "玩家名称格式",
+    ["PLAYER_NAME_FORMAT_DESC"] = "在互联服务器上，默认将隐藏其他服务器玩家的后缀。如果遇到同名的猎人，请调整此设置",
+    ["PLAYER_NAME_ONLY_OPTION_LABEL"] = "玩家名称",
+    ["SHORTENED_SUFFIX_OPTION_LABEL"] = "玩家名称-服(短)",
+    ["FULL_NAME_OPTION_LABEL"] = "玩家名称-服务器(长)",
 
     ["TEST_MODE_HEADER"] = "测试模式",
     ["ENABLE_ARCANE_SHOT_TESTING"] = "切换测试模式",
@@ -85,14 +85,14 @@ local L = {
 
     ---- Messages
     ["ANNOUNCES_MESSAGE_HEADER"] = "通告信息",
-    ["BOSS_SUCCESS_MESSAGE_LABEL"] = "Successful announce message on boss (%s will be replaced by next hunter name)",
-    ["TRASH_SUCCESS_MESSAGE_LABEL"] = "Successful announce message on trash (%s will be replaced by target name)",
+    ["BOSS_SUCCESS_MESSAGE_LABEL"] = "Boss宁神成功通告信息 (%s 将被替换为下一个猎人名字)",
+    ["TRASH_SUCCESS_MESSAGE_LABEL"] = "小怪宁神成功通告信息 (%s 将被替换为目标名字)",
     ["FAIL_MESSAGE_LABEL"] = "施放失败通告信息",
     ["FAIL_WHISPER_LABEL"] = "施放失败私聊信息",
     ["UNABLE_TO_TRANQ_MESSAGE_LABEL"] = "当你无法宁神或呼叫替补时,这条信息就会低声传来",
 
-    ['DEFAULT_BOSS_SUCCESS_ANNOUNCE_MESSAGE'] = "Tranqshot done, %s is next!",
-    ['DEFAULT_TRASH_SUCCESS_ANNOUNCE_MESSAGE'] = "Tranqshot done on %s",
+    ['DEFAULT_BOSS_SUCCESS_ANNOUNCE_MESSAGE'] = "宁神射击成功，下一个是 %s！",
+    ['DEFAULT_TRASH_SUCCESS_ANNOUNCE_MESSAGE'] = "已对 %s 施放宁神射击",
     ['DEFAULT_FAIL_ANNOUNCE_MESSAGE'] = "!!! 对 %s 宁神失败!!!",
     ['DEFAULT_FAIL_WHISPER_MESSAGE'] = "宁神失败 !! 赶紧补宁神!!",
     ['DEFAULT_UNABLE_TO_TRANQ_MESSAGE'] = "我无法宁神射击 ! 请现在宁神 !",
@@ -117,8 +117,8 @@ local L = {
 
     --- Debug
     ["SETTING_DEBUG"] = "Debug",
-    ["ENABLE_DEBUG_OUTPUT"] = "Enable debug output to chat window",
-    ["ENABLE_DEBUG_OUTPUT_DESC"] = "TranqRotate will print debug information to your main chat window",
+    ["ENABLE_DEBUG_OUTPUT"] = "在聊天窗口启用调试输出",
+    ["ENABLE_DEBUG_OUTPUT_DESC"] = "TranqRotate 将在主聊天窗口中打印调试信息",
 
     --- Profiles
     ["SETTING_PROFILES"] = "配置文件",
@@ -129,31 +129,31 @@ local L = {
     ["TOOLTIP_DISABLE_SETTINGS"] = "(您可以在设置中禁用此图标或此工具提示)",
 
     -- Available update
-    ["UPDATE_AVAILABLE"] = "A new TranqRotate version is available, update to get latest features",
-    ["BREAKING_UPDATE_AVAILABLE"] = "A new BREAKING TranqRotate update is available, you MUST update AS SOON AS possible! TranqRotate may not work properly with up-to-date version users.",
+    ["UPDATE_AVAILABLE"] = "有新的 TranqRotate 版本可用，请更新以获取最新功能",
+    ["BREAKING_UPDATE_AVAILABLE"] = "有重大的 TranqRotate 更新可用，您必须尽快更新！否则可能无法与更新版本的玩家正常运作。",
 
     -- Rotation reset
-    ["RESET_UNAUTHORIZED"] = "You must be raid assist to reset the rotation",
+    ["RESET_UNAUTHORIZED"] = "您必须是团队助理才能重置循环",
 
     -- Comms chat messages
-    ["COMMS_SENT_BACKUP_REQUEST"] = "Sending backup request to %s",
-    ["COMMS_RECEIVED_NEW_ROTATION"] = "Received new rotation configuration from %s",
-    ["COMMS_RECEIVED_BACKUP_REQUEST"] = "%s asked for backup !",
-    ["COMMS_RECEIVED_RESET_BROADCAST"] = "%s has reset the rotation.",
+    ["COMMS_SENT_BACKUP_REQUEST"] = "向 %s 发送替补请求",
+    ["COMMS_RECEIVED_NEW_ROTATION"] = "从 %s 收到新的循环配置",
+    ["COMMS_RECEIVED_BACKUP_REQUEST"] = "%s 请求替补！",
+    ["COMMS_RECEIVED_RESET_BROADCAST"] = "%s 已重置循环。",
 
     -- Failed tranq printed messages
-    ["PRINT_FAILED_TRANQ_MISS"] = "%s missed his tranqshot!",
-    ["PRINT_FAILED_TRANQ_RESIST"] = "%s's tranqshot was resisted!",
-    ["PRINT_FAILED_TRANQ_MISS_OR_RESIST"] = "%s's tranqshot was missed or resisted!",
+    ["PRINT_FAILED_TRANQ_MISS"] = "%s 的宁神射击未击中！",
+    ["PRINT_FAILED_TRANQ_RESIST"] = "%s 的宁神射击被抵抗！",
+    ["PRINT_FAILED_TRANQ_MISS_OR_RESIST"] = "%s 的宁神射击未击中或被抵抗！",
 
     -- Incapacitated backup call printed messages
-    ["PRINT_INCAPACITATED_BACKUP_CALL"] = "Backup has been automatically requested because your were incapacitated",
-    ["PRINT_TIMED_BACKUP_CALL"] = "Backup has been automatically requested because your were too slow",
+    ["PRINT_INCAPACITATED_BACKUP_CALL"] = "由于您处于瘫痪状态，已自动请求替补",
+    ["PRINT_TIMED_BACKUP_CALL"] = "由于您太慢，已自动请求替补",
 
     -- Version check printed messages
-    ["VERSION_CHECK_HEADER"] = "Version check",
-    ["VERSION_CHECK_YOU"] = "You",
-    ["VERSION_CHECK_NONE_OR_OUTDATED_VERSION"] = "None or below %s",
+    ["VERSION_CHECK_HEADER"] = "版本检查",
+    ["VERSION_CHECK_YOU"] = "您",
+    ["VERSION_CHECK_NONE_OR_OUTDATED_VERSION"] = "无或低于 %s",
 }
 
 TranqRotate.L = L

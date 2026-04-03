@@ -1,3 +1,5 @@
+if (GetLocale() ~= "enUS") then return end
+
 TranqRotate = select(2, ...)
 
 local L = {

@@ -5,13 +5,13 @@ TranqRotate = select(2, ...)
 local L = {
 
     ["LOADED_MESSAGE"] = "TranqRotate chargé, utilisez /tranq pour les options",
-    ["TRANQ_WINDOW_HIDDEN"] = "Tranqrotate window hidden. Use /tranq toggle to get it back",
+    ["TRANQ_WINDOW_HIDDEN"] = "Fenêtre TranqRotate masquée. Utilisez /tranq toggle pour l'afficher",
 
     -- Buttons tooltips
-    ["BUTTON_CLOSE"] = "Hide window",
-    ["BUTTON_SETTINGS"] = "Settings",
-    ["BUTTON_RESET_ROTATION"] = "Reset Rotation",
-    ["BUTTON_PRINT_ROTATION"] = "Print Rotation",
+    ["BUTTON_CLOSE"] = "Masquer la fenêtre",
+    ["BUTTON_SETTINGS"] = "Paramètres",
+    ["BUTTON_RESET_ROTATION"] = "Réinitialiser la rotation",
+    ["BUTTON_PRINT_ROTATION"] = "Afficher la rotation",
 
     -- Settings
     ["SETTING_GENERAL"] = "Général",
@@ -20,7 +20,7 @@ local L = {
 
     ["LOCK_WINDOW"] = "Verrouiller la position de la fenêtre",
     ["LOCK_WINDOW_DESC"] = "Verrouiller la position de la fenêtre",
-    ["RESET_WINDOW_POSITION"] = "Reset position",
+    ["RESET_WINDOW_POSITION"] = "Réinitialiser la position",
     ["RESET_WINDOW_POSITION_DESC"] = "Reinitialise la position de la fenêtre principale",
     ["HIDE_WINDOW_NOT_IN_RAID"] = "Masquer la fenêtre principale hors raid",
     ["HIDE_WINDOW_NOT_IN_RAID_DESC"] = "Masquer la fenêtre principale hors raid",
@@ -38,7 +38,7 @@ local L = {
     ["SHORTENED_SUFFIX_OPTION_LABEL"] = "Nomdujoueur-Ser",
     ["FULL_NAME_OPTION_LABEL"] = "Nomdujoueur-Serveur",
 
-    ["TEST_MODE_HEADER"] = "Test mode",
+    ["TEST_MODE_HEADER"] = "Mode de test",
     ["ENABLE_ARCANE_SHOT_TESTING"] = "Activer/désactiver le mode test",
     ["ENABLE_ARCANE_SHOT_TESTING_DESC"] =
         "Tant que le mode de test est activé, arcane shot sera considéré comme un tir tranquillisant\n" ..
@@ -69,14 +69,14 @@ local L = {
     ["YELL_SAY_DISABLED_OPEN_WORLD"] = "(Les canaux dire et crier ne fonctionnent pas hors instance)",
 
     ---- Channels
-    ["ANNOUNCES_CHANNEL_HEADER"] = "Canal",
-    ["MESSAGE_CHANNEL_TYPE"] = "Canal",
+    ["ANNOUNCES_CHANNEL_HEADER"] = "Canal d'annonces",
+    ["MESSAGE_CHANNEL_TYPE"] = "Envoyer des messages à",
     ["MESSAGE_CHANNEL_TYPE_DESC"] = "Canal à utiliser pour les annonces",
     ["MESSAGE_CHANNEL_NAME"] = "Nom du canal",
     ["MESSAGE_CHANNEL_NAME_DESC"] = "Nom du canal à utiliser",
 
     ----- Channels types
-    ["CHANNEL_CHANNEL"] = "Channel",
+    ["CHANNEL_CHANNEL"] = "Canal",
     ["CHANNEL_RAID_WARNING"] = "Avertissement raid",
     ["CHANNEL_SAY"] = "Dire",
     ["CHANNEL_YELL"] = "Crier",
@@ -99,7 +99,7 @@ local L = {
 
     ['TRANQ_NOW_LOCAL_ALERT_MESSAGE'] = "TRANQ MAINTENANT !",
 
-    ["BROADCAST_MESSAGE_HEADER"] = "Rapport de la configuration de la rotation",
+    ["BROADCAST_MESSAGE_HEADER"] = "Configuration de la rotation",
     ["USE_MULTILINE_ROTATION_REPORT"] = "Utiliser plusieurs lignes pour la rotation principale",
     ["USE_MULTILINE_ROTATION_REPORT_DESC"] = "Chaque chasseur de la rotation apparaitra sur une ligne numérotée",
 

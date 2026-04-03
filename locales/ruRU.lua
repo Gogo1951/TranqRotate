@@ -8,10 +8,10 @@ local L = {
     ["TRANQ_WINDOW_HIDDEN"] = "Окно TranqRotate скрыто. Введите /tranq toggle для отображения",
 
     -- Buttons tooltips
-    ["BUTTON_CLOSE"] = "Hide window",
-    ["BUTTON_SETTINGS"] = "Settings",
-    ["BUTTON_RESET_ROTATION"] = "Reset Rotation",
-    ["BUTTON_PRINT_ROTATION"] = "Print Rotation",
+    ["BUTTON_CLOSE"] = "Скрыть окно",
+    ["BUTTON_SETTINGS"] = "Настройки",
+    ["BUTTON_RESET_ROTATION"] = "Сбросить ротацию",
+    ["BUTTON_PRINT_ROTATION"] = "Показать ротацию",
 
     -- Settings
     ["SETTING_GENERAL"] = "Общие",
@@ -20,8 +20,8 @@ local L = {
 
     ["LOCK_WINDOW"] = "Закрепить окно",
     ["LOCK_WINDOW_DESC"] = "Препятствует перемещению окна с помощью мыши",
-    ["RESET_WINDOW_POSITION"] = "Reset position",
-    ["RESET_WINDOW_POSITION_DESC"] = "Reset the main window position",
+    ["RESET_WINDOW_POSITION"] = "Сбросить позицию",
+    ["RESET_WINDOW_POSITION_DESC"] = "Сбросить позицию главного окна",
     ["HIDE_WINDOW_NOT_IN_RAID"] = "Показывать окно только в рейде",
     ["HIDE_WINDOW_NOT_IN_RAID_DESC"] = "Окно будет отображаться только в рейдовой группе",
     ["DO_NOT_SHOW_WHEN_JOINING_RAID"] = "Не показывать окно во время присоединения к рейду",
@@ -32,11 +32,11 @@ local L = {
     ["WINDOW_UNLOCKED"] = "TranqRotate: Окно откреплено",
 
     --- Player names formatting options
-    ["PLAYER_NAME_FORMAT"] = "Player names format",
-    ["PLAYER_NAME_FORMAT_DESC"] = "On connected realms, players from other servers will have a the server suffix hidden by default. If you ever get two hunter with the exact same name, adjust this setting to your needs",
-    ["PLAYER_NAME_ONLY_OPTION_LABEL"] = "Playername",
-    ["SHORTENED_SUFFIX_OPTION_LABEL"] = "Playername-Ser",
-    ["FULL_NAME_OPTION_LABEL"] = "Playername-Server",
+    ["PLAYER_NAME_FORMAT"] = "Формат имени игрока",
+    ["PLAYER_NAME_FORMAT_DESC"] = "На объединенных игровых мирах суффикс сервера по умолчанию скрыт. Если у вас в рейде два охотника с одинаковыми именами, измените эту настройку",
+    ["PLAYER_NAME_ONLY_OPTION_LABEL"] = "Имя игрока",
+    ["SHORTENED_SUFFIX_OPTION_LABEL"] = "Имя-Серв(сокращ.)",
+    ["FULL_NAME_OPTION_LABEL"] = "Имя-Сервер",
 
     ["TEST_MODE_HEADER"] = "Тестовый режим",
     ["ENABLE_ARCANE_SHOT_TESTING"] = "Тестовый режим",
@@ -85,14 +85,14 @@ local L = {
 
     ---- Messages
     ["ANNOUNCES_MESSAGE_HEADER"] = "Сообщения оповещений",
-    ["BOSS_SUCCESS_MESSAGE_LABEL"] = "Successful announce message on boss (%s will be replaced by next hunter name)",
-    ["TRASH_SUCCESS_MESSAGE_LABEL"] = "Successful announce message on trash (%s will be replaced by target name)",
+    ["BOSS_SUCCESS_MESSAGE_LABEL"] = "Сообщение об успешном выстреле по боссу (%s - следующий охотник)",
+    ["TRASH_SUCCESS_MESSAGE_LABEL"] = "Сообщение об успешном выстреле по трешу (%s - цель)",
     ["FAIL_MESSAGE_LABEL"] = "При промахе сообщить",
     ["FAIL_WHISPER_LABEL"] = "При промахе шепнуть запасным",
     ["UNABLE_TO_TRANQ_MESSAGE_LABEL"] = "Сообщение шепота, когда вы не можете произвести усирение или оповестить запасных",
 
-    ['DEFAULT_BOSS_SUCCESS_ANNOUNCE_MESSAGE'] = "Tranqshot done, %s is next!",
-    ['DEFAULT_TRASH_SUCCESS_ANNOUNCE_MESSAGE'] = "Tranqshot done on %s",
+    ['DEFAULT_BOSS_SUCCESS_ANNOUNCE_MESSAGE'] = "Усмиряющий выстрел успешен, %s следующий!",
+    ['DEFAULT_TRASH_SUCCESS_ANNOUNCE_MESSAGE'] = "Усмиряющий выстрел по %s",
     ['DEFAULT_FAIL_ANNOUNCE_MESSAGE'] = "!!! Усмиряющий выстрел промахнулся в %s !!!",
     ['DEFAULT_FAIL_WHISPER_MESSAGE'] = "!!! Усмиряющий выстрел промахнулся !!! ! УСМИРЯЙ СЕЙЧАС !",
     ['DEFAULT_UNABLE_TO_TRANQ_MESSAGE'] = "Я НЕ МОГУ УСМИРИТЬ ! УСМИРЯЙ СЕЙЧАС !",
@@ -117,8 +117,8 @@ local L = {
 
     --- Debug
     ["SETTING_DEBUG"] = "Debug",
-    ["ENABLE_DEBUG_OUTPUT"] = "Enable debug output to chat window",
-    ["ENABLE_DEBUG_OUTPUT_DESC"] = "TranqRotate will print debug information to your main chat window",
+    ["ENABLE_DEBUG_OUTPUT"] = "Включить вывод отладки в чат",
+    ["ENABLE_DEBUG_OUTPUT_DESC"] = "TranqRotate будет выводить отладочную информацию в главное окно чата",
 
     --- Profiles
     ["SETTING_PROFILES"] = "Профили",
@@ -129,31 +129,31 @@ local L = {
     ["TOOLTIP_DISABLE_SETTINGS"] = "(Вы можете отключить этот значок и/или эту подсказку в настройках)",
 
     -- Available update
-    ["UPDATE_AVAILABLE"] = "A new TranqRotate version is available, update to get latest features",
-    ["BREAKING_UPDATE_AVAILABLE"] = "A new BREAKING TranqRotate update is available, you MUST update AS SOON AS possible! TranqRotate may not work properly with up-to-date version users.",
+    ["UPDATE_AVAILABLE"] = "Доступна новая версия TranqRotate, обновитесь для получения новых функций",
+    ["BREAKING_UPDATE_AVAILABLE"] = "Доступно КРИТИЧЕСКОЕ обновление TranqRotate, вы ДОЛЖНЫ обновиться КАК МОЖНО СКОРЕЕ! Текущая версия может конфликтовать с новыми.",
 
     -- Rotation reset
-    ["RESET_UNAUTHORIZED"] = "You must be raid assist to reset the rotation",
+    ["RESET_UNAUTHORIZED"] = "Вы должны быть помощником рейда, чтобы сбросить ротацию",
 
     -- Comms chat messages
-    ["COMMS_SENT_BACKUP_REQUEST"] = "Sending backup request to %s",
-    ["COMMS_RECEIVED_NEW_ROTATION"] = "Received new rotation configuration from %s",
-    ["COMMS_RECEIVED_BACKUP_REQUEST"] = "%s asked for backup !",
-    ["COMMS_RECEIVED_RESET_BROADCAST"] = "%s has reset the rotation.",
+    ["COMMS_SENT_BACKUP_REQUEST"] = "Отправка запроса запасному %s",
+    ["COMMS_RECEIVED_NEW_ROTATION"] = "Получена новая конфигурация ротации от %s",
+    ["COMMS_RECEIVED_BACKUP_REQUEST"] = "%s просит помощи запасного!",
+    ["COMMS_RECEIVED_RESET_BROADCAST"] = "%s сбросил ротацию.",
 
     -- Failed tranq printed messages
-    ["PRINT_FAILED_TRANQ_MISS"] = "%s missed his tranqshot!",
-    ["PRINT_FAILED_TRANQ_RESIST"] = "%s's tranqshot was resisted!",
-    ["PRINT_FAILED_TRANQ_MISS_OR_RESIST"] = "%s's tranqshot was missed or resisted!",
+    ["PRINT_FAILED_TRANQ_MISS"] = "%s промахнулся Усмиряющим выстрелом!",
+    ["PRINT_FAILED_TRANQ_RESIST"] = "Усмиряющий выстрел %s сопротивление!",
+    ["PRINT_FAILED_TRANQ_MISS_OR_RESIST"] = "Усмиряющий выстрел %s промах или сопротивление!",
 
     -- Incapacitated backup call printed messages
-    ["PRINT_INCAPACITATED_BACKUP_CALL"] = "Backup has been automatically requested because your were incapacitated",
-    ["PRINT_TIMED_BACKUP_CALL"] = "Backup has been automatically requested because your were too slow",
+    ["PRINT_INCAPACITATED_BACKUP_CALL"] = "Запасной охотник вызван автоматически, так как вы были недееспособны",
+    ["PRINT_TIMED_BACKUP_CALL"] = "Запасной охотник вызван автоматически, так как вы были слишком медлительны",
 
     -- Version check printed messages
-    ["VERSION_CHECK_HEADER"] = "Version check",
-    ["VERSION_CHECK_YOU"] = "You",
-    ["VERSION_CHECK_NONE_OR_OUTDATED_VERSION"] = "None or below %s",
+    ["VERSION_CHECK_HEADER"] = "Проверка версии",
+    ["VERSION_CHECK_YOU"] = "Вы",
+    ["VERSION_CHECK_NONE_OR_OUTDATED_VERSION"] = "Нет или ниже %s",
 }
 
 TranqRotate.L = L
