@@ -270,18 +270,12 @@ end
 
 -- Iterate over hunter list and purge hunter that aren't in the group anymore
 function TranqRotate:purgeHunterList()
-
-    local hunterToRemove = {}
-
-    for _, hunter in pairs(TranqRotate.hunterTable) do
+    for index = #TranqRotate.hunterTable, 1, -1 do
+        local hunter = TranqRotate.hunterTable[index]
         if (not UnitInParty(hunter.name)) then
-            table.insert(hunterToRemove, hunter)
+            TranqRotate:unregisterUnitEvents(hunter)
+            TranqRotate:removeHunter(hunter)
         end
-    end
-
-    for _, hunter in pairs(hunterToRemove) do
-        TranqRotate:unregisterUnitEvents(hunter)
-        TranqRotate:removeHunter(hunter)
     end
 end
 
@@ -319,6 +313,10 @@ function TranqRotate:updateRaidStatus()
         TranqRotate:updateDragAndDrop()
 
         if (not TranqRotate.raidInitialized) then
+            if (TranqRotate.eventFrame) then
+                TranqRotate.eventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+            end
+
             if (not TranqRotate.db.profile.doNotShowWindowOnRaidJoin) then
                 TranqRotate:updateDisplay()
             end
@@ -336,6 +334,9 @@ function TranqRotate:updateRaidStatus()
         end
     else
         if(TranqRotate.raidInitialized == true) then
+            if (TranqRotate.eventFrame) then
+                TranqRotate.eventFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+            end
             TranqRotate:updateDisplay()
             TranqRotate.raidInitialized = false
         end
