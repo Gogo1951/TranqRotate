@@ -2,13 +2,12 @@ TranqRotate = select(2, ...)
 
 local L = TranqRotate.L
 
--- GetAddOnMetadata moves to C_ namespace in TBC 2.5.5 - Era still use the old global function
-local GetAddOnMetadata = GetAddOnMetadata or (C_AddOns and C_AddOns.GetAddOnMetadata)
+-- GetAddOnMetadata moved to C_AddOns namespace. Prefer the new API; fall back to the global for TBC 2.5.5.
+local GetAddOnMetadata = (C_AddOns and C_AddOns.GetAddOnMetadata) or GetAddOnMetadata
 TranqRotate.version = GetAddOnMetadata(..., "Version")
 
 -- Initialize addon - Shouldn't be call more than once
 function TranqRotate:init()
-
     TranqRotate:LoadDefaults()
 
     TranqRotate.db = LibStub:GetLibrary("AceDB-3.0"):New("TranqRotateDb", self.defaults, true)
@@ -21,7 +20,7 @@ function TranqRotate:init()
 
     TranqRotate.hunterTable = {}
     TranqRotate.addonVersions = {}
-    TranqRotate.rotationTables = { rotation = {}, backup = {} }
+    TranqRotate.rotationTables = {rotation = {}, backup = {}}
 
     TranqRotate.raidInitialized = false
     TranqRotate.testMode = false
@@ -36,7 +35,7 @@ function TranqRotate:init()
 
     TranqRotate:initComms()
 
-    TranqRotate:printMessage(L['LOADED_MESSAGE'])
+    TranqRotate:printMessage(L["LOADED_MESSAGE"])
 end
 
 -- Apply setting on profile change
@@ -47,12 +46,11 @@ end
 
 -- Apply settings
 function TranqRotate:applySettings()
-
     TranqRotate.mainFrame:ClearAllPoints()
 
     local config = TranqRotate.db.profile
     if config.point then
-        TranqRotate.mainFrame:SetPoint(config.point, UIParent, 'BOTTOMLEFT', config.x, config.y)
+        TranqRotate.mainFrame:SetPoint(config.point, UIParent, "BOTTOMLEFT", config.x, config.y)
     else
         TranqRotate.mainFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
     end
@@ -75,19 +73,15 @@ end
 function TranqRotate:sendAnnounceMessage(chatMessage)
     if TranqRotate.db.profile.enableAnnounces then
         -- Prints instead to avoid lua error in open world with say and yell
-        if (
-            not IsInInstance() and
-            (TranqRotate.db.profile.channelType == "SAY" or TranqRotate.db.profile.channelType == "YELL")
-        ) then
+        if
+            (not IsInInstance() and
+                (TranqRotate.db.profile.channelType == "SAY" or TranqRotate.db.profile.channelType == "YELL"))
+         then
             TranqRotate:printPrefixedMessage(chatMessage .. " " .. L["YELL_SAY_DISABLED_OPEN_WORLD"])
             return
         end
 
-        TranqRotate:sendMessage(
-            chatMessage,
-            TranqRotate.db.profile.channelType,
-            TranqRotate.db.profile.targetChannel
-        )
+        TranqRotate:sendMessage(chatMessage, TranqRotate.db.profile.channelType, TranqRotate.db.profile.targetChannel)
     end
 end
 
@@ -103,7 +97,7 @@ end
 -- Send a message to a given channel
 function TranqRotate:sendMessage(message, channelType, targetChannel)
     local channelNumber
-    if channelType == "CHANNEL" then
+    if channelType == "CHANNEL" and targetChannel then
         channelNumber = GetChannelName(targetChannel)
     end
     SendChatMessage(message, channelType, nil, channelNumber or targetChannel)
@@ -114,23 +108,23 @@ SLASH_TRANQROTATE2 = "/tranqrotate"
 SlashCmdList["TRANQROTATE"] = function(message)
     local _, _, command, arguments = string.find(message, "%s?(%w+)%s?(.*)")
 
-    if (command == 'toggle') then
+    if (command == "toggle") then
         TranqRotate:toggleDisplay()
-    elseif (command == 'lock') then
+    elseif (command == "lock") then
         TranqRotate:lock(true)
-    elseif (command == 'unlock') then
+    elseif (command == "unlock") then
         TranqRotate:lock(false)
-    elseif (command == 'backup') then
+    elseif (command == "backup") then
         TranqRotate:alertBackup(TranqRotate.db.profile.unableToTranqMessage)
-    elseif (command == 'rotate') then -- @todo decide if this should be removed or not (Used in runDemo)
+    elseif (command == "rotate") then -- @todo decide if this should be removed or not (Used in runDemo)
         TranqRotate:testRotation()
-    elseif (command == 'test') then
+    elseif (command == "test") then
         TranqRotate:toggleArcaneShotTesting()
-    elseif (command == 'report') then
+    elseif (command == "report") then
         TranqRotate:printRotationSetup()
-    elseif (command == 'settings') then
+    elseif (command == "settings") then
         TranqRotate:openSettings()
-    elseif (command == 'check') then
+    elseif (command == "check") then
         TranqRotate:checkVersions()
     else
         TranqRotate:printHelp()
@@ -140,7 +134,7 @@ end
 function TranqRotate:toggleDisplay()
     if (TranqRotate.mainFrame:IsShown()) then
         TranqRotate.mainFrame:Hide()
-        TranqRotate:printMessage(L['TRANQ_WINDOW_HIDDEN'])
+        TranqRotate:printMessage(L["TRANQ_WINDOW_HIDDEN"])
     else
         TranqRotate.mainFrame:Show()
     end
@@ -154,21 +148,25 @@ end
 
 -- Sends rotation setup to raid channel
 function TranqRotate:printRotationSetup()
-
     if (IsInRaid()) then
-        TranqRotate:sendRotationSetupBroadcastMessage('--- ' .. TranqRotate.constants.printPrefix .. L['BROADCAST_HEADER_TEXT'] .. ' ---')
+        TranqRotate:sendRotationSetupBroadcastMessage(
+            "--- " .. TranqRotate.constants.printPrefix .. L["BROADCAST_HEADER_TEXT"] .. " ---"
+        )
 
         if (TranqRotate.db.profile.useMultilineRotationReport) then
             TranqRotate:printMultilineRotation(TranqRotate.rotationTables.rotation)
         else
             TranqRotate:sendRotationSetupBroadcastMessage(
-                TranqRotate:buildGroupMessage(L['BROADCAST_ROTATION_PREFIX'] .. ' : ', TranqRotate.rotationTables.rotation)
+                TranqRotate:buildGroupMessage(
+                    L["BROADCAST_ROTATION_PREFIX"] .. " : ",
+                    TranqRotate.rotationTables.rotation
+                )
             )
         end
 
         if (#TranqRotate.rotationTables.backup > 0) then
             TranqRotate:sendRotationSetupBroadcastMessage(
-                TranqRotate:buildGroupMessage(L['BROADCAST_BACKUP_PREFIX'] .. ' : ', TranqRotate.rotationTables.backup)
+                TranqRotate:buildGroupMessage(L["BROADCAST_BACKUP_PREFIX"] .. " : ", TranqRotate.rotationTables.backup)
             )
         end
     end
@@ -176,10 +174,10 @@ end
 
 -- Print the main rotation on multiple lines
 function TranqRotate:printMultilineRotation(rotationTable, channel)
-    local position = 1;
+    local position = 1
     for key, hunter in pairs(rotationTable) do
-        TranqRotate:sendRotationSetupBroadcastMessage(tostring(position) .. ' - ' .. hunter.name)
-        position = position + 1;
+        TranqRotate:sendRotationSetupBroadcastMessage(tostring(position) .. " - " .. hunter.name)
+        position = position + 1
     end
 end
 
@@ -191,42 +189,48 @@ function TranqRotate:buildGroupMessage(prefix, rotationTable)
         table.insert(hunters, TranqRotate:formatPlayerName(hunter.name))
     end
 
-    return prefix .. table.concat(hunters, ', ')
+    return prefix .. table.concat(hunters, ", ")
 end
 
 -- Print command options to chat
 function TranqRotate:printHelp()
-    local spacing = '   '
-    TranqRotate:printMessage(TranqRotate:colorText('/tranqrotate') .. ' commands options :')
-    TranqRotate:printMessage(spacing .. TranqRotate:colorText('toggle') .. ' : Show/Hide the main window')
-    TranqRotate:printMessage(spacing .. TranqRotate:colorText('lock') .. ' : Lock the main window position')
-    TranqRotate:printMessage(spacing .. TranqRotate:colorText('unlock') .. ' : Unlock the main window position')
-    TranqRotate:printMessage(spacing .. TranqRotate:colorText('settings') .. ' : Open TranqRotate settings')
-    TranqRotate:printMessage(spacing .. TranqRotate:colorText('report') .. ' : Prints the rotation setup to the configured channel')
-    TranqRotate:printMessage(spacing .. TranqRotate:colorText('backup') .. ' : Whispers backup hunters to immediately tranq')
-    TranqRotate:printMessage(spacing .. TranqRotate:colorText('check') .. ' : Prints users version of TranqRotate')
-    TranqRotate:printMessage(spacing .. TranqRotate:colorText('test') .. ' : Toggle test mode')
+    local spacing = "   "
+    TranqRotate:printMessage(TranqRotate:colorText("/tranqrotate") .. " commands options :")
+    TranqRotate:printMessage(spacing .. TranqRotate:colorText("toggle") .. " : Show/Hide the main window")
+    TranqRotate:printMessage(spacing .. TranqRotate:colorText("lock") .. " : Lock the main window position")
+    TranqRotate:printMessage(spacing .. TranqRotate:colorText("unlock") .. " : Unlock the main window position")
+    TranqRotate:printMessage(spacing .. TranqRotate:colorText("settings") .. " : Open TranqRotate settings")
+    TranqRotate:printMessage(
+        spacing .. TranqRotate:colorText("report") .. " : Prints the rotation setup to the configured channel"
+    )
+    TranqRotate:printMessage(
+        spacing .. TranqRotate:colorText("backup") .. " : Whispers backup hunters to immediately tranq"
+    )
+    TranqRotate:printMessage(spacing .. TranqRotate:colorText("check") .. " : Prints users version of TranqRotate")
+    TranqRotate:printMessage(spacing .. TranqRotate:colorText("test") .. " : Toggle test mode")
 end
 
 -- Adds color to given text
 function TranqRotate:colorText(text)
-    return '|cffffbf00' .. text .. '|r'
+    return "|cffffbf00" .. text .. "|r"
 end
 
 -- Toggle arcane shot testing mode
 function TranqRotate:toggleArcaneShotTesting(disable)
-
     if (not disable and not TranqRotate.testMode) then
-        TranqRotate:printPrefixedMessage(L['ARCANE_SHOT_TESTING_ENABLED'])
+        TranqRotate:printPrefixedMessage(L["ARCANE_SHOT_TESTING_ENABLED"])
         TranqRotate.testMode = true
 
         -- Disable testing after 10 minutes
-        C_Timer.After(600, function()
-            TranqRotate:toggleArcaneShotTesting(true)
-        end)
+        C_Timer.After(
+            600,
+            function()
+                TranqRotate:toggleArcaneShotTesting(true)
+            end
+        )
     else
         TranqRotate.testMode = false
-        TranqRotate:printPrefixedMessage(L['ARCANE_SHOT_TESTING_DISABLED'])
+        TranqRotate:printPrefixedMessage(L["ARCANE_SHOT_TESTING_DISABLED"])
     end
 end
 
@@ -252,7 +256,9 @@ function TranqRotate:checkVersions()
 
     for player, version in pairs(TranqRotate.addonVersions) do
         if (player ~= UnitName("player")) then
-            TranqRotate:printPrefixedMessage(TranqRotate:formatPlayerName(player) .. " - " .. TranqRotate:formatAddonVersion(version))
+            TranqRotate:printPrefixedMessage(
+                TranqRotate:formatPlayerName(player) .. " - " .. TranqRotate:formatAddonVersion(version)
+            )
         end
     end
 end
@@ -269,7 +275,10 @@ end
 -- Returns a string based on the hunter addon version
 function TranqRotate:formatAddonVersion(version)
     if (version == nil) then
-        return string.format(L['VERSION_CHECK_NONE_OR_OUTDATED_VERSION'], TranqRotate.constants.minimumKnownWorkingVersion)
+        return string.format(
+            L["VERSION_CHECK_NONE_OR_OUTDATED_VERSION"],
+            TranqRotate.constants.minimumKnownWorkingVersion
+        )
     else
         return version
     end
@@ -277,15 +286,14 @@ end
 
 -- Prints in the chat the reason a tranqshot has failed
 function TranqRotate:printFail(hunter, event)
-
     local name = TranqRotate:formatPlayerName(hunter.name)
     if (event == "SPELL_MISSED") then
-        TranqRotate:printPrefixedMessage(string.format(L['PRINT_FAILED_TRANQ_MISS'], name))
-    elseif(event == "SPELL_DISPEL_FAILED") then
-        TranqRotate:printPrefixedMessage(string.format(L['PRINT_FAILED_TRANQ_RESIST'], name))
+        TranqRotate:printPrefixedMessage(string.format(L["PRINT_FAILED_TRANQ_MISS"], name))
+    elseif (event == "SPELL_DISPEL_FAILED") then
+        TranqRotate:printPrefixedMessage(string.format(L["PRINT_FAILED_TRANQ_RESIST"], name))
     else
         -- v1.5.1 and older do not send the event type
-        TranqRotate:printPrefixedMessage(string.format(L['PRINT_FAILED_TRANQ_MISS_OR_RESIST'], name))
+        TranqRotate:printPrefixedMessage(string.format(L["PRINT_FAILED_TRANQ_MISS_OR_RESIST"], name))
     end
 end
 
@@ -296,7 +304,7 @@ function TranqRotate:runDemo()
         function()
             TranqRotate:startBossFrenzyCooldown(10)
             C_Timer.After(
-                 1,
+                1,
                 function()
                     TranqRotate:testRotation()
                 end
@@ -309,9 +317,8 @@ end
 -- Parse version string
 -- @return major, minor, fix, isStable
 function TranqRotate:parseVersionString(versionString)
-
     local version, versionType = strsplit("-", versionString)
-    local major, minor, fix = strsplit( ".", version)
+    local major, minor, fix = strsplit(".", version)
 
     return tonumber(major), tonumber(minor), tonumber(fix), versionType == nil
 end
@@ -319,14 +326,14 @@ end
 -- Check if the given version would require updating
 -- @return requireUpdate, breakingUpdate
 function TranqRotate:isUpdateRequired(versionString)
-
-    if (nil == versionString) then return false, false end
+    if (nil == versionString) then
+        return false, false
+    end
 
     local remoteMajor, remoteMinor, remoteFix, isRemoteStable = self:parseVersionString(versionString)
     local localMajor, localMinor, localFix, isLocalStable = self:parseVersionString(TranqRotate.version)
 
     if (isRemoteStable) then
-
         if (remoteMajor > localMajor) then
             return true, true
         elseif (remoteMajor < localMajor) then
@@ -351,14 +358,13 @@ end
 function TranqRotate:notifyUserAboutAvailableUpdate(isBreakingUpdate)
     if (isBreakingUpdate) then
         if (TranqRotate.notifiedBreakingUpdate ~= true) then
-            TranqRotate:printPrefixedMessage('|cffff3d3d' .. L['BREAKING_UPDATE_AVAILABLE'] .. '|r')
+            TranqRotate:printPrefixedMessage("|cffff3d3d" .. L["BREAKING_UPDATE_AVAILABLE"] .. "|r")
             TranqRotate.notifiedBreakingUpdate = true
         end
     else
         if (TranqRotate.notifiedUpdate ~= true and TranqRotate.notifiedBreakingUpdate ~= true) then
-            TranqRotate:printPrefixedMessage(L['UPDATE_AVAILABLE'])
+            TranqRotate:printPrefixedMessage(L["UPDATE_AVAILABLE"])
             TranqRotate.notifiedUpdate = true
         end
     end
 end
-}
