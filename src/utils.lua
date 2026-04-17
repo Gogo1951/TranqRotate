@@ -1,6 +1,5 @@
 -- Check if a table contains the given element
 function TranqRotate:tableContains(table, element)
-
     for _, value in pairs(table) do
         if value == element then
             return true
@@ -32,15 +31,15 @@ end
 
 -- Checks if a hunter is eligible to tranq next
 function TranqRotate:isEligibleForNextTranq(hunter)
-
-    local isCooldownShortEnough = hunter.lastTranqTime <= GetTime() - TranqRotate.constants.minimumCooldownElapsedForEligibility
+    local isCooldownShortEnough =
+        hunter.lastTranqTime <= GetTime() - TranqRotate.constants.minimumCooldownElapsedForEligibility
 
     return TranqRotate:isHunterAliveAndOnline(hunter) and isCooldownShortEnough
 end
 
 -- Checks if a hunter is in a battleground
 function TranqRotate:isPlayerInBattleground()
-    return UnitInBattleground('player') ~= nil
+    return UnitInBattleground("player") ~= nil
 end
 
 -- Checks if a hunter is in a PvE raid
@@ -66,7 +65,6 @@ end
 
 -- Checks if the spell and the mob match a boss frenzy
 function TranqRotate:isBossFrenzy(spellId, sourceGUID)
-
     local bosses = TranqRotate.constants.bosses
     local mobId = TranqRotate:getIdFromGuid(sourceGUID)
 
@@ -81,7 +79,6 @@ end
 
 -- Checks if the mob is a tranq-able boss
 function TranqRotate:isTranqableBoss(guid)
-
     local bosses = TranqRotate.constants.bosses
     local mobId = TranqRotate:getIdFromGuid(guid)
 
@@ -96,22 +93,29 @@ end
 
 -- Checks if the player is a hunter
 function TranqRotate:isHunter(name)
-    return select(2,UnitClass(name)) == 'HUNTER'
+    return select(2, UnitClass(name)) == "HUNTER"
 end
 
--- Check if unit is promoted (raid assist or raid leader)
+-- Check if a unit is the raid leader or a raid assistant
 function TranqRotate:isPlayerRaidAssist(name)
+    if (not TranqRotate:isInPveRaid()) then
+        return false
+    end
 
-    if (TranqRotate:isInPveRaid()) then
+    if (UnitIsGroupAssistant and UnitIsGroupAssistant(name)) then
+        return true
+    end
 
-        local raidIndex = UnitInRaid(name)
+    if (UnitIsGroupLeader and UnitIsGroupLeader(name)) then
+        return true
+    end
 
-        if (raidIndex) then
-            local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(raidIndex)
-
-            if (rank > 0) then
-                return true
-            end
+    -- Fallback for clients that somehow lack the helpers above
+    local raidIndex = UnitInRaid(name)
+    if (raidIndex) then
+        local _, rank = GetRaidRosterInfo(raidIndex)
+        if (rank and rank > 0) then
+            return true
         end
     end
 
@@ -131,7 +135,6 @@ end
 
 -- Format the player name and server suffix
 function TranqRotate:formatPlayerName(fullName)
-
     local displayName = fullName
 
     if (TranqRotate.constants.playerNameFormats.SHORT == TranqRotate.db.profile.playerNameFormatting) then
