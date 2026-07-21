@@ -1,5 +1,9 @@
 ## TranqRotate Changelog
 
+#### v2.3.3
+
+- Update toc for classic 1.15.9 and TBC 2.5.6 
+
 #### v2.3.2
 
 - Update toc for TBC 2.5.5
