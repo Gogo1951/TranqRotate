@@ -3,6 +3,7 @@
 #### v2.3.3
 
 - Update toc for classic 1.15.9 and TBC 2.5.6 
+- Minor code improvements
 
 #### v2.3.2
 
