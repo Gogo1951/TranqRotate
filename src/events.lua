@@ -1,3 +1,5 @@
+local L = TranqRotate.L
+
 local eventFrame = CreateFrame("Frame")
 eventFrame:RegisterEvent("PLAYER_LOGIN")
 eventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
@@ -113,7 +115,7 @@ end
 
 -- Player left combat
 function TranqRotate:ENCOUNTER_END()
-    TranqRotate.endEncounter()
+    TranqRotate:endEncounter()
 end
 
 function TranqRotate:PLAYER_TARGET_CHANGED()
