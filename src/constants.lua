@@ -31,6 +31,9 @@ TranqRotate.constants = {
     },
 
     ['printPrefix'] = 'TranqRotate - ',
+    ['reportMarker'] = '{rt2}', -- Circle, prefixes the rotation report header
+    ['missingAddonMarker'] = '(*)',
+    ['addonUrl'] = 'https://www.curseforge.com/wow/addons/tranqrotate',
     ['duplicateTranqshotDelayThreshold'] = 10,
     ['duplicateFailedTranqshotDelayThreshold'] = 10,
 

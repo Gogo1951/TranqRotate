@@ -129,6 +129,41 @@ function TranqRotate:isUnitAllowedToManageRotation(unitName)
     return TranqRotate:isHunter(unitName) or TranqRotate:isPlayerRaidAssist(unitName)
 end
 
+-- Returns a name carrying its realm suffix, used where the name must stay unambiguous
+-- The game omits the suffix for players on your own realm, but Classic Era realms are
+-- connected, so a bare name can belong to several people in the same raid
+function TranqRotate:getFullPlayerName(name)
+
+    if (strfind(name, "-")) then
+        return name
+    end
+
+    local realm = TranqRotate:getPlayerRealm()
+
+    if (realm == nil or realm == '') then
+        return name
+    end
+
+    return name .. "-" .. realm
+end
+
+-- Own realm in the suffix format, stripped of spaces and punctuation
+function TranqRotate:getPlayerRealm()
+
+    if (TranqRotate.playerRealm == nil or TranqRotate.playerRealm == '') then
+        local realm = GetNormalizedRealmName and GetNormalizedRealmName()
+
+        if (realm == nil or realm == '') then
+            realm = GetRealmName and GetRealmName()
+            realm = realm and string.gsub(realm, "[%s'%-]", "")
+        end
+
+        TranqRotate.playerRealm = realm
+    end
+
+    return TranqRotate.playerRealm
+end
+
 -- Format the player name and server suffix
 function TranqRotate:formatPlayerName(fullName)
 
