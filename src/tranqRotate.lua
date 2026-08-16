@@ -190,9 +190,6 @@ function TranqRotate:printRotationSetup()
             TranqRotate.constants.missingAddonMarker .. ' ' .. L['BROADCAST_MISSING_ADDON_PREFIX'] .. ' : ' ..
                 table.concat(missingAddon, ', ')
         )
-        TranqRotate:sendRotationSetupBroadcastMessage(
-            L['BROADCAST_DOWNLOAD_PREFIX'] .. ' : ' .. TranqRotate.constants.addonUrl
-        )
     end
 end
 
