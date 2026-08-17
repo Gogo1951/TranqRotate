@@ -169,8 +169,11 @@ function TranqRotate:printRotationSetup()
     -- Names flagged while building the rotation lines, reported again at the end
     local missingAddon = {}
 
+    local spellLink = TranqRotate:getSpellLink(TranqRotate.constants.tranqShotSpellId)
+
     TranqRotate:sendRotationSetupBroadcastMessage(
-        TranqRotate.constants.reportMarker .. ' ' .. L['BROADCAST_HEADER_TEXT']
+        TranqRotate.constants.reportMarker .. ' ' ..
+            string.format(L['BROADCAST_HEADER_TEXT'], spellLink or TranqRotate.constants.tranqShotName)
     )
 
     for position, hunter in ipairs(TranqRotate.rotationTables.rotation) do
@@ -202,7 +205,7 @@ function TranqRotate:buildReportName(hunter, missingAddon)
 
     if (TranqRotate:isMissingAddon(hunter)) then
         table.insert(missingAddon, name)
-        return name .. ' ' .. TranqRotate.constants.missingAddonMarker
+        return name .. TranqRotate.constants.missingAddonMarker
     end
 
     return name
