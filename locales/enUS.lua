@@ -100,7 +100,7 @@ local L = {
     ["BROADCAST_MESSAGE_HEADER"] = "Rotation setup text broadcast",
 
     --- Raid broadcast messages
-    ["BROADCAST_HEADER_TEXT"] = "Tranquilizing Shot Order, powered by TranqRotate",
+    ["BROADCAST_HEADER_TEXT"] = "%s Order, by TranqRotate",
     ["BROADCAST_BACKUP_PREFIX"] = "Backup",
     ["BROADCAST_MISSING_ADDON_PREFIX"] = "Missing TranqRotate",
 
